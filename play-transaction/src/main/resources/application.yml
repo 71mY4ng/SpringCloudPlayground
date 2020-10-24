@@ -5,13 +5,8 @@ spring:
     active: dev
 
 server:
-  tomcat:
-    uri-encoding: UTF-8
-    max-threads: 1000
-    min-spare-threads: 30
   port: 8020
-  servlet:
-    context-path: /play-transaction
-  redis:
-    host: 127.0.0.1
-    port: 6379
+
+logging:
+  level:
+    com.timyang.playground.transaction: "debug"
