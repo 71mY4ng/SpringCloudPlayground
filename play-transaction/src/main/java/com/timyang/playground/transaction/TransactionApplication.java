@@ -32,13 +32,10 @@ public class TransactionApplication {
                         "Context-path:\t{}\n\t" +
                         "Profile(s): \t{}\n----------------------------------------------------------",
                 env.getProperty("spring.application.name"),
-                protocol,
-                env.getProperty("server.port"),
-                protocol,
-                InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port"), env.getProperty("server.servlet.context-path"),
+                protocol, env.getProperty("server.port"),
+                protocol, InetAddress.getLocalHost().getHostAddress(), env.getProperty("server.port"),
+                env.getProperty("server.servlet.context-path"),
                 env.getActiveProfiles());
-
 
     }
 }

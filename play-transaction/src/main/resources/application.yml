@@ -3,6 +3,9 @@ spring:
     name: play-transaction
   profiles:
     active: dev
+  redis:
+    host: redis-mono
+    port: 6379
 
 server:
   port: 8020
