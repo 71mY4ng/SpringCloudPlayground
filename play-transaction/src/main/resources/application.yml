@@ -3,13 +3,13 @@ spring:
     name: play-transaction
   profiles:
     active: dev
-  redis:
-    host: redis-mono
-    port: 6379
 
 server:
   port: 8020
 
-logging:
-  level:
-    com.timyang.playground.transaction: "debug"
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
