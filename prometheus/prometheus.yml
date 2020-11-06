@@ -1,0 +1,22 @@
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['127.0.0.1:9090','node-exporterhost:9100','cadvisorhost:8080','redis_exporter:9121']
+  - job_name: 'play-transaction'
+    metrics_path: '/acturator/prometheus'
+    static_configs:
+    - targets: ['play-transaction:8020']
