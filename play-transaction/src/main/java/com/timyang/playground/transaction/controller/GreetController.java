@@ -3,6 +3,8 @@ package com.timyang.playground.transaction.controller;
 import com.timyang.playground.transaction.dao.TokenRecordRepository;
 import com.timyang.playground.transaction.entitys.TokenRecord;
 import com.timyang.playground.transaction.util.IdGenService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Api(value = "Greet and user token", tags = "token")
 @RestController
 @RequestMapping("/greet")
 public class GreetController {
@@ -32,6 +35,7 @@ public class GreetController {
     }
 
     @GetMapping(value = "/greeting")
+    @ApiOperation(value = "greeting", notes = "greeting and get token")
     public String greeting(@RequestParam String name) {
 
         log.debug("greeting transaction comes from {}", name);
@@ -56,6 +60,7 @@ public class GreetController {
     }
 
     @PostMapping(value = "/update")
+    @ApiOperation("updateToken")
     public TokenRecord updateToken(@RequestParam String name) {
         log.debug("{} request for an update of the token", name);
 
@@ -69,6 +74,7 @@ public class GreetController {
     }
 
     @GetMapping(value = "/list")
+    @ApiOperation("listTokenRecord")
     public List<TokenRecord> list() {
 
         log.debug("list tokenRecord");
