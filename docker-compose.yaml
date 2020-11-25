@@ -4,12 +4,13 @@ services:
   app:
     container_name: play-transaction
     image: timyangjava/play-transaction
-    restart: always
+    restart: unless-stopped
     build: ./play-transaction/
     ports:
         - "8020:8020"
     depends_on:
         - redis-mono
+        - db
 
   redis-mono:
     container_name: redis-mono
@@ -17,7 +18,17 @@ services:
     #environment:
     ports:
         - "6379:6379"
-    restart: always
+    restart: unless-stopped
+
+  db:
+    container_name: postgresdb
+    image: postgres:13-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secrect123
+    ports:
+        - "5432:5432"
 
   # prometheus and grafana configs
 

@@ -12,3 +12,11 @@ management:
 logging:
   level:
     com.timyang.playground.transaction: "debug"
+
+app:
+  datasource:
+    url: "jdbc:postgresql://127.0.0.1/market"
+    username: "postgres"
+    password: "secrect123"
+    configuration:
+      maximum-pool-size: 30
