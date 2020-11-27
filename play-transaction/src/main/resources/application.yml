@@ -1,8 +1,10 @@
 spring:
   application:
     name: play-transaction
+  jooq:
+    sql-dialect: Postgres
   profiles:
-    active: dev
+    active: @activatedProperties@ #dev
 
 server:
   port: 8020
