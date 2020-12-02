@@ -14,10 +14,12 @@ services:
 
   redis-mono:
     container_name: redis-mono
-    image: redis:latest
+    image: redis:6-alpine
     #environment:
+    volumes:
+      - ./data/redis:/data
     ports:
-        - "6379:6379"
+      - "6379:6379"
     restart: unless-stopped
 
   db:
@@ -27,8 +29,11 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secrect123
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
     ports:
-        - "5432:5432"
+      - "5432:5432"
 
   # prometheus and grafana configs
 
