@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: play-filebrowse
+  profiles:
+    active: @activatedProperties@ #dev
+
+server:
+  port: 8804

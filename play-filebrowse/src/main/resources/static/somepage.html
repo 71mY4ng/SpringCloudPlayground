@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/resources/dojo.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/claro.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojox/grid/resources/Grid.css" />
+    <link rel="stylesheet"
+        href="https://ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojox/grid/resources/claroGrid.css" />
+    <title>Document</title>
+</head>
+
+<body class="claro">
+    <h2 id="browsing">browsing: <em id="browse-path"></em></h2>
+    <div id="grid"></div>
+    <!-- load Dojo -->
+    <script src="https://cdn.jsdelivr.net/npm/dojo@1.16.3/dojo.js" data-dojo-config="async: true"></script>
+
+    <script>
+
+        require([
+            "dojo/parser",
+            "dojox/grid/DataGrid",
+            "dojo/store/Memory",
+            "dojo/data/ObjectStore",
+            "dojo/request",
+            "dojo/store/JsonRest",
+            "dojo/ready",
+            'dojo/dom',
+            'dojo/dom-construct',
+            "dijit/registry",
+            "dojo/domReady!"
+        ], function (parser, DataGrid, Memory, ObjectStore, request, JsonRest, ready, dom, domConstruct, registry) {
+            parser.parse();
+
+            function updateBrowsingPath(path) {
+                let browsePathNode = dom.byId('browse-path');
+                browsePathNode.innerHTML = path;
+            }
+
+            updateBrowsingPath("/");
+
+
+            var grid, dataStore;
+            request("/ls", {
+                headers: {
+                    "Access-Control-Allow-Headers": "*",
+                    "Access-Control-Allow-Origin": "*",
+                    "X-Requested-With": "*"
+                },
+                query: {
+                    path: "/tmp"
+                },
+                handleAs: "json"
+            }).then(function (data) {
+                console.log(data);
+                dataStore = new ObjectStore({
+                    objectStore: new Memory({ data: data })
+                });
+                grid = new DataGrid({
+                    autoHeight: true,
+                    store: dataStore,
+                    query: { id: "*" },
+                    structure: [
+                        { name: "permission", field: "permissions", width: "84px" },
+                        { name: "group", field: "group", width: "84px" },
+                        { name: "owner", field: "owner", width: "70px" },
+                        { name: "size", field: "size", width: "70px" },
+                        { name: "last_modified", field: "lastModified", width: "150px" },
+                        { name: "fileName", field: "fileName", width: "360px" },
+                    ]
+                }, "grid");
+
+                grid.startup();
+            });
+
+        });
+    </script>
+</body>
+
+</html>
