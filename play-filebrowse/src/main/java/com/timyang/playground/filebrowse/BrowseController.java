@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
 
-@RestController
-@RequestMapping("/")
 @Slf4j
+@RestController
+@RequestMapping("/file-browser")
 public class BrowseController {
 
 
