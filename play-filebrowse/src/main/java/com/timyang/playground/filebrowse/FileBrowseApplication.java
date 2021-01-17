@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
-//@ComponentScan(excludeFilters = {
-//        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {RestTestController.class, BrowseController.class})
-//})
+@ComponentScan(excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {AllMappingController.class})
+})
 @SpringBootApplication
 public class FileBrowseApplication {
 
