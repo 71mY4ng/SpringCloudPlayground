@@ -19,7 +19,9 @@
 
 <body class="claro">
     <h2 id="browsing">browsing: <em id="browse-path"></em></h2>
-    <div id="grid"></div>
+    <div id="parentDiv">
+        <div id="grid"></div>
+    </div>
     <!-- load Dojo -->
     <script src="https://cdn.jsdelivr.net/npm/dojo@1.16.3/dojo.js" data-dojo-config="async: true"></script>
 
@@ -33,11 +35,13 @@
             "dojo/request",
             "dojo/store/JsonRest",
             "dojo/ready",
+            'dojo/window',
+            "dojo/_base/window",
             'dojo/dom',
             'dojo/dom-construct',
             "dijit/registry",
             "dojo/domReady!"
-        ], function (parser, DataGrid, Memory, ObjectStore, request, JsonRest, ready, dom, domConstruct, registry) {
+        ], function (parser, DataGrid, Memory, ObjectStore, request, JsonRest, ready, win, baseWin, dom, domConstruct, registry) {
             parser.parse();
 
             function updateBrowsingPath(path) {
@@ -49,6 +53,7 @@
 
 
             var grid, dataStore;
+            var vs = win.getBox();
             request("/file-browser/ls", {
                 headers: {
                     "Access-Control-Allow-Headers": "*",
@@ -56,7 +61,7 @@
                     "X-Requested-With": "*"
                 },
                 query: {
-                    path: "/tmp"
+                    path: "/home/timyang/Music/test4000file/"
                 },
                 handleAs: "json"
             }).then(function (data) {
@@ -65,7 +70,7 @@
                     objectStore: new Memory({ data: data })
                 });
                 grid = new DataGrid({
-                    autoHeight: true,
+                    // autoHeight: true,
                     store: dataStore,
                     query: { id: "*" },
                     structure: [
@@ -79,7 +84,19 @@
                 }, "grid");
 
                 grid.startup();
+                grid.resize({ w: parentDiv.clientWidth, h: vs.h });
+
             });
+
+            dojo.addOnLoad(function () {
+
+                dojo.connect(grid, 'onresize', function () {
+                    vs = win.getBox();
+                    grid.resize({ w: parentDiv.clientWidth, h: vs.h });
+                    grid.update();
+                });
+            });
+
 
         });
     </script>
