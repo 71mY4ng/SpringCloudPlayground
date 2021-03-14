@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.0.xsd
+		http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
+        ">
+
+    <int:logging-channel-adapter id="loggingChannel"
+                                 log-full-message="true"
+                                 logger-name="tapInbound"
+                                 level="INFO"/>
+    <int:channel id="amqpInboundChannel">
+        <int:interceptors>
+            <int:wire-tap channel="loggingChannel"/>
+        </int:interceptors>
+    </int:channel>
+<!--    <int-amqp:inbound-channel-adapter channel="amqpInboundChannel"-->
+<!--                                      auto-startup="false"-->
+<!--                                      queue-names="si.test.deliver-q"-->
+<!--    />-->
+
+<!--    <int:json-to-object-transformer input-channel="amqpInboundChannel"-->
+<!--                                    output-channel="inboundEventChannel"-->
+<!--                                    type="com.timyang.playground.intregration.deliver.InboundEvent"-->
+<!--    />-->
+
+    <int:channel id="inboundEventChannel">
+        <int:dispatcher task-executor="inboundThreadPoolExecutor"/>
+    </int:channel>
+    <int:chain input-channel="inboundEventChannel" output-channel="sourceTransformChannel">
+        <int:service-activator ref="inboundEventProcessor" method="process"/>
+        <int:splitter/>
+    </int:chain>
+
+    <int:channel id="yearEndTaskChannel"/>
+    <int:channel id="monthEndTaskChannel"/>
+    <int:channel id="weekendTaskChannel"/>
+
+    <int:channel id="sourceTransformChannel"/>
+    <int:router input-channel="sourceTransformChannel"
+                expression="payload.taskType"
+                default-output-channel="deliverChannel">
+        <int:mapping value="Year_End" channel="yearEndTaskChannel"/>
+        <int:mapping value="Month_End" channel="monthEndTaskChannel"/>
+        <int:mapping value="Weekend" channel="weekendTaskChannel"/>
+    </int:router>
+
+    <int:channel id="deliverChannel"/>
+    <int:channel id="deliverFailChannel"/>
+
+    <int:channel id="nodeCompletionChannel"/>
+</beans>
