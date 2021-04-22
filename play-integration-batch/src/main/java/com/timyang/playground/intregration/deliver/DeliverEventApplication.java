@@ -19,10 +19,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 @ImportResource("classpath:deliver-flow.xml")
 @SpringBootApplication
-public class DeliverEventJob {
+public class DeliverEventApplication {
 
     public static void main(String[] args) {
-        final ConfigurableApplicationContext run = SpringApplication.run(DeliverEventJob.class, args);
+        final ConfigurableApplicationContext run = SpringApplication.run(DeliverEventApplication.class, args);
     }
 
     @Bean

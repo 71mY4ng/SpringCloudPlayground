@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
+
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+    <bean id="myAspect" class="com.timyang.playground.intregration.booktravel.ExecutorAspect"/>
+    <aop:config>
+        <aop:aspect ref="myAspect">
+            <aop:pointcut id="some" expression="execution(* com.timyang.playground.intregration.booktravel.ConcreteExecutor.execute(..)) and args(name)"/>
+            <aop:around method="aroundExe" pointcut-ref="some" />
+        </aop:aspect>
+    </aop:config>
+</beans>

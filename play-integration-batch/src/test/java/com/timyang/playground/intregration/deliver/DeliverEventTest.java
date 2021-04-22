@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DeliverEventJob.class)
+@SpringBootTest(classes = DeliverEventApplication.class)
 public class DeliverEventTest {
 
     @Autowired
