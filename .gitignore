@@ -43,3 +43,7 @@ buildNumber.properties
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### docker ###
+
+data
