@@ -15,7 +15,7 @@ logging:
 
 app:
   datasource:
-    url: "jdbc:postgresql://postgresdb/market"
+    url: "jdbc:postgresql://postgresdb/postgres"
     username: "postgres"
     password: "secrect123"
     configuration:
