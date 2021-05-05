@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: play-public-api
+  profiles:
+    active: @activatedProperties@ #dev
+
+server:
+  port: 8020
+
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
