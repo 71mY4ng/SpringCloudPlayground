@@ -4,7 +4,6 @@ import com.timyang.playground.api.entitys.LoginUser;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @Component("redisLoginUserRepository")
 public class RedisLoginUserRepository implements LoginUserRepository {
@@ -26,12 +25,12 @@ public class RedisLoginUserRepository implements LoginUserRepository {
 
     @Override
     public void update(LoginUser updated) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(String id) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
