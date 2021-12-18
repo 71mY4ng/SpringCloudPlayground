@@ -2,7 +2,7 @@ spring:
   application:
     name: play-public-api
   profiles:
-    active: @activatedProperties@ #dev
+    active: '@activatedProperties@' #dev
 
 server:
   port: 8020
