@@ -26,8 +26,11 @@ services:
     container_name: postgresdb
     image: postgres:13-alpine
     restart: unless-stopped
+    command: -c ssl=on -c ssl_cert_file=/var/lib/postgresql/server.crt -c ssl_key_file=/var/lib/postgresql/server.key
     volumes:
         - ./data/postgres:/var/lib/postgresql/data/:rw
+        - ./data/ca/server.crt:/var/lib/postgresql/server.crt
+        - ./data/ca/server.key:/var/lib/postgresql/server.key
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secrect123

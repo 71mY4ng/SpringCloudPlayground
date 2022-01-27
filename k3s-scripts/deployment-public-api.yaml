@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: play-public-api
+  name: play-public-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: play-public-api
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: play-public-api
+    spec:
+      containers:
+      - image: localhost:5000/play-public-api
+        name: play-public-api
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: play-public-api
+  name: play-public-api
+spec:
+  ports:
+  - name: 8020-8020
+    port: 8020
+    protocol: TCP
+    targetPort: 8020
+  selector:
+    app: play-public-api
+  type: ClusterIP
+status:
+  loadBalancer: {}

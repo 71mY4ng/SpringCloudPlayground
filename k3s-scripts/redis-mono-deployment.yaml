@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /home/timyang/IdeaProjects/SpringCloudPlayground/play-public-api/docker-compose.yaml
+    kompose.version: 1.24.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: redis-mono
+  name: redis-mono
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: redis-mono
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /home/timyang/IdeaProjects/SpringCloudPlayground/play-public-api/docker-compose.yaml
+        kompose.version: 1.24.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: redis-mono
+    spec:
+      containers:
+        - image: redis:6-alpine
+          name: redis-mono
+          ports:
+            - containerPort: 6379
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: redis-mono-claim0
+      restartPolicy: Always
+      volumes:
+        - name: redis-mono-claim0
+          persistentVolumeClaim:
+            claimName: redis-mono-claim0
+status: {}

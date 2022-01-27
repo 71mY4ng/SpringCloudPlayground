@@ -36,12 +36,12 @@
             "dojo/store/JsonRest",
             "dojo/ready",
             'dojo/window',
-            "dojo/_base/window",
+//            "dojo/_base/window",
             'dojo/dom',
             'dojo/dom-construct',
             "dijit/registry",
             "dojo/domReady!"
-        ], function (parser, DataGrid, Memory, ObjectStore, request, JsonRest, ready, win, baseWin, dom, domConstruct, registry) {
+        ], function (parser, DataGrid, Memory, ObjectStore, request, JsonRest, ready, win,  dom, domConstruct, registry) {
             parser.parse();
 
             function updateBrowsingPath(path) {
@@ -84,15 +84,18 @@
                 }, "grid");
 
                 grid.startup();
-                grid.resize({ w: parentDiv.clientWidth, h: vs.h });
+                grid.resize({ w: parentDiv.clientWidth, h: vs.h + 80 });
 
             });
 
             dojo.addOnLoad(function () {
+                console.log(999);
 
                 dojo.connect(grid, 'onresize', function () {
                     vs = win.getBox();
-                    grid.resize({ w: parentDiv.clientWidth, h: vs.h });
+                    grid.resize({ w: parentDiv.clientWidth, h: vs.h + 80 });
+                    console.log("change hw: " + vs.h);
+
                     grid.update();
                 });
             });

@@ -3,7 +3,8 @@ services:
 
   app:
     container_name: play-public-api
-    image: timyangjava/play-public-api
+    #image: timyangjava/play-public-api
+    image: play-public-api:0.0.1-SNAPSHOT
     restart: unless-stopped
     build: ./
     ports:
